@@ -1,0 +1,7 @@
+*
+
+!.gitignore
+!README.md
+!Makefile
+!docker-compose.yaml
+!.env.dist
