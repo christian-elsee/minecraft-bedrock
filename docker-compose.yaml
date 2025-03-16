@@ -1,6 +1,6 @@
 services:
   server:
-    image: itzg/minecraft-bedrock-server
+    image: itzg/minecraft-bedrock-server:2024.11.0
     environment:
       EULA: "true"
     ports:
@@ -12,7 +12,7 @@ services:
     image: 4km3/dnsmasq:2.90-r3-alpine-latest
     hostname: dnsmasq
     networks:
-      dns:
+      macvlan:
         ipv4_address: 192.168.86.53
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -28,11 +28,6 @@ volumes:
   store:
 
 networks:
-  dns:
-    driver: macvlan
-    driver_opts:
-      parent: ${IFACE}  # Replace eth0 with the correct network interface on your host
-    ipam:
-      config:
-        - subnet: 192.168.86.0/24  # Replace with the subnet of your LAN
-          gateway: 192.168.86.1
+  macvlan:
+    external: true
+    name: macvlan
